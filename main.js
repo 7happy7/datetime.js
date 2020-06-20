@@ -20,7 +20,7 @@ class datetime extends Date {
         !secs || this.setSeconds(this.getSeconds() + secs);
     }
 
-    strftime(s, l="en") {
+    strftime(string, locale="en") {
         var a = {
             y: this.getFullYear(),
             m: this.getMonth() + 1,
@@ -81,10 +81,10 @@ class datetime extends Date {
             M: ("0" + a.M).slice(-2),
             S: ("0" + a.S).slice(-2),
             f: ("00" + a.MS + "000").slice(-6),
-            A: (this.locale[l] && this.locale[l].A ? this.locale[l].A : this.locale.en.A)[a.a],
-            a: (this.locale[l] && this.locale[l].a ? this.locale[l].a : this.locale.en.a)[a.a],
-            B: (this.locale[l] && this.locale[l].B ? this.locale[l].B : this.locale.en.B)[a.m - 1],
-            b: (this.locale[l] && this.locale[l].b ? this.locale[l].b : this.locale.en.b)[a.m - 1],
+            A: (this.locale[locale] && this.locale[locale].A ? this.locale[locale].A : this.locale.en.A)[a.a],
+            a: (this.locale[locale] && this.locale[locale].a ? this.locale[locale].a : this.locale.en.a)[a.a],
+            B: (this.locale[locale] && this.locale[locale].B ? this.locale[locale].B : this.locale.en.B)[a.m - 1],
+            b: (this.locale[locale] && this.locale[locale].b ? this.locale[locale].b : this.locale.en.b)[a.m - 1],
             w: String(a.a),
             j: ("00" + b).slice(-3),
             z: (a._utc < 0 ? "-" : "+") + ("0" + Math.floor(a._utc * (a._utc < 0 ? -1 : 1))).slice(-2) + ("0" + (a._utc % 1 * 60)).slice(-2),
@@ -95,7 +95,7 @@ class datetime extends Date {
         dict.x = dict.Y + "/" + dict.m + "/" + dict.d;
         dict.X = dict.H + ":" + dict.M + ":" + dict.S;
     
-        return s.replace(/%([a-zA-Z%])/g, function(a, b) {
+        return string.replace(/%([a-zA-Z%])/g, function(a, b) {
             return dict[b] || a;
         });
     }
